@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 });
 
 // Create a Model
-const personSchema = new Schema({
+const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
   age: { type: Number },
   favoriteFoods: [String]
@@ -22,8 +22,13 @@ const personSchema = new Schema({
 // Create a Model
 const Person = mongoose.model("Person", personSchema);
 
+// Create and save a record of a model
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  const newPerson = new Person({name: "Mary", age: 31, favoriteFoods: ["pickles", "olives", "tomatoes"]});
+  newPerson.save((err, data) => {
+    if (err) return done(err);
+    done(null, data);
+  });
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
