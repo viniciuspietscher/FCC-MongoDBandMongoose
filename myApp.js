@@ -3,8 +3,6 @@ const express = require('express');
 const app = express();
 const path = require("path");
 const port = 3000;
-
-
 require('dotenv').config();
 
 // Install and setup mongoose
@@ -14,7 +12,15 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
-let Person;
+// Create a Model
+const personSchema = new Schema({
+  name: { type: String, required: true },
+  age: { type: Number },
+  favoriteFoods: [String]
+});
+
+// Create a Model
+const Person = mongoose.model("Person", personSchema);
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
